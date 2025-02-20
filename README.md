@@ -9,11 +9,11 @@
                            └────────▲─────────┘
                                     │
  ┌───────────────────┬───────────────────┬───────────────────┐
- │  Account Service  │    Order Service   │  Payment Service  │
- │  (MySQL/Postgre)  │   (Cassandra)      │   (PostgreSQL)    │
+ │  Account Service  │    Order Service  │  Payment Service  │
+ │  (MySQL/Postgre)  │   (Cassandra)     │   (PostgreSQL)    │
  └───────────────────┴───────────────────┴───────────────────┘
-          │                        │                        │
-          ▼                        ▼                        ▼
+          │                        │                    │
+          ▼                        ▼                    ▼
  ┌───────────────────┐    ┌───────────────────┐    ┌───────────────────┐
  │  Item Service     │    │  Auth Service     │    │  Event Processing │
  │  (MongoDB)        │    │  (JWT + Security) │    │  (Kafka)          │
@@ -24,6 +24,8 @@
 ```plaintext
 ShopSphere/
 │── api-gateway/         # API 网关（Spring Cloud Gateway）
+├── service-registry/     # 服务注册中心
+├── config-server/        # 配置中心
 │── services/
 │   ├── account-service/ # 账号管理（Spring Boot + MySQL）
 │   ├── order-service/   # 订单管理（Spring Boot + Cassandra + Kafka）
@@ -43,39 +45,20 @@ ShopSphere/
 │── pom.xml              # Maven 项目管理
 
 ```
-OR
-```plaintext
-ShopSphere/
-├── api-gateway/
-├── service-registry/     # 添加服务注册中心
-├── config-server/        # 添加配置中心
-├── services/
-│   ├── account-service/
-│   ├── order-service/
-│   ├── payment-service/
-│   ├── item-service/
-│   └── auth-service/
-├── common/
-├── infrastructure/
-├── docker/
-├── deployment/
-├── docs/
-└── pom.xml
-```
 
 🛠 关键技术栈
 ```plaintext
-组件	技术
-开发框架	Spring Boot 3, Spring Cloud
-API 管理	Spring Cloud Gateway, Swagger
-数据库	PostgreSQL, MySQL, MongoDB, Cassandra
-服务通信	Spring Cloud OpenFeign, RestTemplate
-事件驱动架构	Kafka
-身份认证	Spring Security, JWT
-容器化	Docker, Docker Compose
-单元测试	JUnit, Mockito, PowerMock, Jacoco
-日志 & 监控	ELK (Elasticsearch, Logstash, Kibana), Prometheus
-CI/CD	GitHub Actions, Jenkins
+组件	          技术
+开发框架	     Spring Boot 3, Spring Cloud
+API 管理	     Spring Cloud Gateway, Swagger
+数据库  	     PostgreSQL, MySQL, MongoDB, Cassandra
+服务通信	     Spring Cloud OpenFeign, RestTemplate
+事件驱动架构	 Kafka
+身份认证	     Spring Security, JWT
+容器化	       Docker, Docker Compose
+单元测试	     JUnit, Mockito, PowerMock, Jacoco
+日志 & 监控	 ELK (Elasticsearch, Logstash, Kibana), Prometheus
+CI/CD	       GitHub Actions, Jenkins
 ```
 
 
@@ -106,68 +89,4 @@ CI/CD	GitHub Actions, Jenkins
 处理 用户认证
 采用 Spring Security + JWT
 生成 OAuth2 Token
-```
-
-```plaintext
-1️⃣ Day 1-2: 基础设施搭建
-
-搭建项目基础框架
-配置 Maven 父子工程
-设置基础依赖和版本管理
-配置 Docker 环境
-实现基础的 API Gateway 路由
-
-2️⃣ Day 3-4: 核心服务开发（第一阶段）
-
-Account Service:
-
-基础的用户注册/登录
-JWT 认证实现
-
-
-Item Service:
-
-商品 CRUD
-基础库存查询
-
-
-
-3️⃣ Day 5-6: 核心服务开发（第二阶段）
-
-Order Service:
-
-创建订单
-订单状态管理
-
-
-Payment Service:
-
-基础支付流程
-支付状态更新
-
-
-
-4️⃣ Day 7-8: 服务集成
-
-实现服务间的 Feign 调用
-基础的 Kafka 消息集成
-实现基础的异常处理
-添加必要的日志记录
-
-5️⃣ Day 9-10: 测试和文档
-
-编写单元测试（达到 30% 覆盖率要求）
-完善 API 文档
-Docker 编排和部署测试
-README 文档完善
-```
-
-```plaintext
-📌 第一天目标
- 所有环境安装完成
- Git 仓库创建 & 初始化提交
- Spring Boot 项目结构搭建完成
- docker-compose.yml & Dockerfile 配置完成
- API 设计 & 数据库 Schema 初步确定
-
 ```
